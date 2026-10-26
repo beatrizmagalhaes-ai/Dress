@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane fx:id="gamePane" 
+            prefHeight="1080.0" 
+            prefWidth="1600.0" 
+            styleClass="game-root"
+            stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.mycompany.jogo.GameController">
+            
+    <children>
+        <!-- 1. Botão VOLTAR (Invisível no canto superior esquerdo) -->
+        <Button fx:id="btnVoltar" 
+                layoutX="45.0" 
+                layoutY="30.0" 
+                onAction="#voltarParaSelecao" 
+                prefHeight="135.0" 
+                prefWidth="135.0" 
+                styleClass="invisible-btn" />
+
+        <!-- 2. Contador de MOEDAS (No visor superior direito) -->
+        <Label fx:id="lblMoedas" 
+               layoutX="1200.0" 
+               layoutY="35.0" 
+               prefHeight="110.0" 
+               prefWidth="290.0" 
+               styleClass="moedas-label" 
+               text="0" />
+
+        <!-- 3. BONECO NO PEDESTAL -->
+        <ImageView fx:id="imgPersonagem" 
+                   fitHeight="550.0" 
+                   fitWidth="320.0" 
+                   layoutX="130.0" 
+                   layoutY="320.0" 
+                   pickOnBounds="true" 
+                   preserveRatio="true" />
+
+        <!-- 4. Botões das Abas do Guarda-Roupas -->
+        <HBox layoutX="678.0" layoutY="258.0" spacing="12.0">
+            <children>
+                <Button fx:id="btnVestidos" onAction="#mostrarVestidos" prefHeight="72.0" prefWidth="128.0" styleClass="aba-btn" text="VESTIDOS" />
+                <Button fx:id="btnBlusas" onAction="#mostrarBlusas" prefHeight="72.0" prefWidth="128.0" styleClass="aba-btn" text="BLUSAS" />
+                <Button fx:id="btnCalcas" onAction="#mostrarCalcas" prefHeight="72.0" prefWidth="128.0" styleClass="aba-btn" text="CALÇAS" />
+                <Button fx:id="btnAcessorios" onAction="#mostrarAcessorios" prefHeight="72.0" prefWidth="128.0" styleClass="aba-btn" text="ACESSÓRIOS" />
+                <Button fx:id="btnSapatos" onAction="#mostrarSapatos" prefHeight="72.0" prefWidth="128.0" styleClass="aba-btn" text="SAPATOS" />
+                <Button fx:id="btnSairLoja" onAction="#sairOuAbrirLoja" prefHeight="72.0" prefWidth="128.0" styleClass="aba-btn" text="LOJA" />
+            </children>
+        </HBox>
+
+        <!-- 5. Guarda-Roupas TRANSPARENTE (Sem fundo branco) -->
+        <ScrollPane layoutX="670.0" layoutY="350.0" prefHeight="530.0" prefWidth="820.0" styleClass="guarda-roupa-scroll">
+            <content>
+                <GridPane fx:id="gridItens" hgap="20.0" vgap="20.0" styleClass="guarda-roupa-grid" />
+            </content>
+        </ScrollPane>
+
+        <!-- 6. Botão SALVAR LOOK (Sobre a moldura rosa inferior) -->
+        <Button fx:id="btnSalvarLook" 
+                layoutX="830.0" 
+                layoutY="905.0" 
+                onAction="#salvarLook" 
+                prefHeight="80.0" 
+                prefWidth="500.0" 
+                styleClass="salvar-btn" 
+                text="SALVAR LOOK" />
+    </children>
+</AnchorPane>

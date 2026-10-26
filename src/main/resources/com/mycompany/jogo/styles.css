@@ -1,0 +1,163 @@
+/* ==========================================================================
+   1. MENU PRINCIPAL (primary.fxml)
+   ========================================================================== */
+
+/* Background do Menu Principal */
+.root {
+    -fx-background-image: url("fundo.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+/* Botões Transparentes do Menu Principal */
+.transparent-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #E24875;
+    -fx-font-family: "Arial Black", "Segoe UI Bold", sans-serif;
+    -fx-font-size: 32px;            /* Fonte bem visível e destacada */
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 140px;       /* Empurra para a direita, limpando o ícone e centralizando no balão */
+    -fx-cursor: hand;
+}
+
+.transparent-btn:hover {
+    -fx-text-fill: #B02350;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.transparent-btn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+
+/* ==========================================================================
+   2. TELA DE SELEÇÃO DE PERSONAGENS (secondary.fxml)
+   ========================================================================== */
+
+/* Background da Tela de Seleção */
+.secondary-root {
+    -fx-background-image: url("fundo2.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+/* Botões dos Nomes dos Personagens (Mariana, Maiara, Beatriz, Marco) */
+.personagem-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #4A1E00;
+    -fx-font-family: "Arial Black", "Segoe UI Bold", sans-serif;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.personagem-btn:hover {
+    -fx-text-fill: #E24875;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.personagem-btn:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+/* ==========================================================================
+   3. TELA DE GAMEPLAY (game.fxml)
+   ========================================================================== */
+
+/* Botão de Voltar Totalmente Transparente/Invisível */
+.invisible-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.invisible-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 50%;
+}
+
+/* Valor Numérico das Moedas */
+.moedas-label {
+    -fx-font-family: "Arial Black", "Segoe UI Bold", sans-serif;
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-padding: 0 40px 0 0;
+}
+
+/* Botões Pequenos das Abas Superiores */
+.aba-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #8B2252;
+    -fx-font-family: "Arial Black", "Segoe UI Bold", sans-serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.aba-btn:hover {
+    -fx-text-fill: #E24875;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Botão Comprido de Salvar Look */
+.salvar-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Arial Black", "Segoe UI Bold", sans-serif;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-cursor: hand;
+}
+
+.salvar-btn:hover {
+    -fx-text-fill: #FFE5EE;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.salvar-btn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+/* Remove o fundo branco do ScrollPane e deixa a área de roupas transparente */
+.guarda-roupa-scroll, 
+.guarda-roupa-scroll > .viewport,
+.guarda-roupa-scroll .scroll-bar:vertical,
+.guarda-roupa-scroll .scroll-bar:horizontal {
+    -fx-background-color: transparent !important;
+    -fx-background: transparent !important;
+    -fx-border-color: transparent !important;
+}
+
+/* Botão Salvar Look centralizado sobre a caixa rosa */
+.salvar-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #8B2252;
+    -fx-font-family: "Arial Black", sans-serif;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.salvar-btn:hover {
+    -fx-text-fill: #E24875;
+}

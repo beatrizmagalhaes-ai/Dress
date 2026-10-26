@@ -1,0 +1,58 @@
+-- 1. Tabela de Jogadores / Personagens
+CREATE TABLE IF NOT EXISTS jogador (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE,
+    moedas INT NOT NULL DEFAULT 0,
+    pontos_estilo INT NOT NULL DEFAULT 0,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Tabela de Itens / Roupas / Acessórios
+CREATE TABLE IF NOT EXISTS item (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50) NOT NULL, -- Ex: 'ROUPA', 'VESTIDO', 'BLUSA', 'CALCA', 'SAPATO', 'ACESSORIO'
+    preco INT NOT NULL DEFAULT 0,
+    caminho_imagem VARCHAR(255) NOT NULL
+);
+
+-- 3. Tabela de Inventário do Jogador (Relação N:N entre Jogador e Item)
+CREATE TABLE IF NOT EXISTS inventario (
+    id SERIAL PRIMARY KEY,
+    jogador_id INT NOT NULL REFERENCES jogador(id) ON DELETE CASCADE,
+    item_id INT NOT NULL REFERENCES item(id) ON DELETE CASCADE,
+    data_aquisicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_jogador_item UNIQUE (jogador_id, item_id)
+);
+
+-- 4. Tabela de Upgrades Adquiridos
+CREATE TABLE IF NOT EXISTS upgrade_jogador (
+    id SERIAL PRIMARY KEY,
+    jogador_id INT NOT NULL REFERENCES jogador(id) ON DELETE CASCADE,
+    tipo_upgrade VARCHAR(100) NOT NULL, -- Ex: 'MULTIPLICADOR_MOEDAS', 'SUPER_ESTILO'
+    nivel INT NOT NULL DEFAULT 1
+);
+
+-- 5. Tabela de Histórico de Partidas / Runs (Para Ranking)
+CREATE TABLE IF NOT EXISTS partida (
+    id SERIAL PRIMARY KEY,
+    jogador_id INT NOT NULL REFERENCES jogador(id) ON DELETE CASCADE,
+    pontuacao_final INT NOT NULL,
+    moedas_ganhas INT NOT NULL,
+    data_partida TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- INSERÇÃO DOS 4 PERSONAGENS PADRÃO (Sem erros de digitação)
+INSERT INTO jogador (nome, moedas, pontos_estilo) VALUES
+('MARIANA', 1000, 0),
+('MAIARA', 1000, 0),
+('BEATRIZ', 1000, 0),
+('MARCO', 1000, 0)
+ON CONFLICT (nome) DO NOTHING;
+
+-- INSERÇÃO DE ITENS INICIAIS DE TESTE
+INSERT INTO item (nome, tipo, preco, caminho_imagem) VALUES
+('Roupa Casual 1', 'ROUPA', 50, 'marco_roupa1.png'),
+('Roupa Elegante 2', 'ROUPA', 100, 'mariana_roupa2.png'),
+('Vestido de Festa 3', 'ROUPA', 150, 'maiara_roupa3.png'),
+('Conjunto Esportivo 4', 'ROUPA', 200, 'beatriz_roupa4.png');
