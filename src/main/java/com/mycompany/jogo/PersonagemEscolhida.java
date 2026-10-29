@@ -1,13 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.jogo;
 
-/**
- *
- * @author aluno
- */
 public class PersonagemEscolhida {
-    
+    private String nome;
+    private String caminhoFundo;
+    private String caminhoBoneco;
+
+    public PersonagemEscolhida(String nome, String caminhoFundo, String caminhoBoneco) {
+        this.nome = nome;
+        this.caminhoFundo = caminhoFundo;
+        this.caminhoBoneco = caminhoBoneco;
+    }
+
+    public String getNome() { return nome; }
+    public String getCaminhoFundo() { return caminhoFundo; }
+    public String getCaminhoBoneco() { return caminhoBoneco; }
 }
