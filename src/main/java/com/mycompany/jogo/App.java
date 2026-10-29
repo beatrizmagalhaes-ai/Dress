@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Classe principal da aplicação JavaFX.
+ * Classe principal do MBM Dress.
  */
 public class App extends Application {
 
@@ -19,11 +19,11 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("primary"), 1600, 1080);
         
-        // Carrega o arquivo de estilos CSS do pacote
+        // Carrega o CSS global
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         
         stage.setTitle("MBM Dress");
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setScene(scene);
         stage.show();
     }
