@@ -3,17 +3,20 @@ package com.mycompany.jogo;
 import com.mycompany.jogo.dao.JogadorDAO;
 import com.mycompany.jogo.model.Jogador;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
+
 public class GameController {
 
-    public static String personagemAtual = "MARIANA";
-    public static String fundoAtual = "fundoMariana.png";
-    public static String imagemBonecoAtual = "marianaBase.png";
+    public static String personagemAtual = "MAYARA";
+    public static String fundoAtual = "fundoMayara.png";
+    public static String imagemBonecoAtual = "mayaraBase.png";
 
     @FXML private AnchorPane gamePane;
     @FXML private Label lblMoedas;
@@ -25,7 +28,7 @@ public class GameController {
 
     @FXML
     public void initialize() {
-        // 1. Carrega o fundo do personagem
+        // 1. Aplica o fundo do personagem
         if (fundoAtual != null && !fundoAtual.isEmpty()) {
             try {
                 String imagePath = getClass().getResource(fundoAtual).toExternalForm();
@@ -38,17 +41,18 @@ public class GameController {
             }
         }
 
-        // 2. Posiciona a imagem do personagem
+        // 2. Carrega a imagem do boneco
         if (imagemBonecoAtual != null && !imagemBonecoAtual.isEmpty()) {
             try {
                 Image boneco = new Image(getClass().getResourceAsStream(imagemBonecoAtual));
                 imgPersonagem.setImage(boneco);
+                imgPersonagem.setPreserveRatio(true);
             } catch (Exception e) {
                 System.err.println("Erro ao carregar boneco: " + imagemBonecoAtual);
             }
         }
 
-        // 3. Busca o jogador atual do banco de dados PostgreSQL
+        // 3. Atualiza dados do banco
         atualizarDadosJogador();
     }
 
@@ -64,20 +68,19 @@ public class GameController {
     @FXML
     private void salvarLook() {
         if (jogadorLogado != null) {
-            // Soma +100 moedas ao saldo do jogador ao salvar um look
             int novasMoedas = jogadorLogado.getMoedas() + 100;
             boolean atualizou = jogadorDAO.atualizarMoedas(jogadorLogado.getId(), novasMoedas);
             
             if (atualizou) {
                 jogadorLogado.setMoedas(novasMoedas);
                 lblMoedas.setText(String.valueOf(novasMoedas));
-                System.out.println("Look salvo! +100 moedas adicionadas para " + personagemAtual);
+                System.out.println("Look salvo com sucesso!");
             }
         }
     }
 
     @FXML
-    private void voltarParaSelecao() throws Exception {
+    private void voltarParaSelecao() throws IOException {
         App.setRoot("secondary");
     }
 
