@@ -26,13 +26,13 @@ public class PrimaryController {
     }
 
     @FXML
-    private void abrirRanking(ActionEvent event) {
-        System.out.println("Ranking...");
+    private void abrirRanking(ActionEvent event) throws IOException {
+        App.setRoot("ranking");
     }
 
     @FXML
-    private void abrirCreditos(ActionEvent event) {
-        System.out.println("Créditos...");
+    private void abrirCreditos(ActionEvent event) throws IOException {
+        App.setRoot("creditos");
     }
 
     @FXML
