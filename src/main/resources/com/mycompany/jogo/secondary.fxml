@@ -13,6 +13,15 @@
             fx:controller="com.mycompany.jogo.SecondaryController">
             
     <children>
+        <!-- Botão Voltar (Transparente posicionamento sobre a seta rosa) -->
+        <Button fx:id="btnVoltar" 
+                layoutX="40.0" 
+                layoutY="40.0" 
+                prefHeight="120.0" 
+                prefWidth="120.0" 
+                onAction="#voltarTela" 
+                style="-fx-background-color: transparent; -fx-cursor: hand;" />
+
         <!-- Botão 1: MARIANA -->
         <Button fx:id="btnMariana" 
                 layoutX="100.0" 
