@@ -46,14 +46,14 @@
                    preserveRatio="true" />
 
         <!-- 4. Abas do Guarda-Roupa -->
-        <HBox layoutX="705.0" layoutY="260.0" spacing="16.0">
+        <HBox layoutX="692.0" layoutY="252.0" spacing="13.0">
             <children>
-                <Button fx:id="btnVestidos" onAction="#mostrarVestidos" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="VESTIDOS" />
-                <Button fx:id="btnBlusas" onAction="#mostrarBlusas" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="BLUSAS" />
-                <Button fx:id="btnCalcas" onAction="#mostrarCalcas" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="CALÇAS" />
-                <Button fx:id="btnAcessorios" onAction="#mostrarAcessorios" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="ACESSÓRIOS" />
-                <Button fx:id="btnSapatos" onAction="#mostrarSapatos" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="SAPATOS" />
-                <Button fx:id="btnSairLoja" onAction="#sairOuAbrirLoja" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="LOJA" />
+                <Button fx:id="btnVestidos" alignment="CENTER" onAction="#mostrarVestidos" prefHeight="65.0" prefWidth="110.0" styleClass="aba-btn" text="VESTIDOS" />
+                <Button fx:id="btnBlusas" alignment="CENTER" onAction="#mostrarBlusas" prefHeight="65.0" prefWidth="110.0" styleClass="aba-btn" text="BLUSAS" />
+                <Button fx:id="btnCalcas" alignment="CENTER" onAction="#mostrarCalcas" prefHeight="65.0" prefWidth="110.0" styleClass="aba-btn" text="CALÇAS" />
+                <Button fx:id="btnAcessorios" alignment="CENTER" onAction="#mostrarAcessorios" prefHeight="65.0" prefWidth="110.0" styleClass="aba-btn" text="ACESSÓRIOS" />
+                <Button fx:id="btnSapatos" alignment="CENTER" onAction="#mostrarSapatos" prefHeight="65.0" prefWidth="110.0" styleClass="aba-btn" text="SAPATOS" />
+                <Button fx:id="btnSairLoja" alignment="CENTER" onAction="#sairOuAbrirLoja" prefHeight="65.0" prefWidth="110.0" styleClass="aba-btn" text="LOJA" />
             </children>
         </HBox>
 
