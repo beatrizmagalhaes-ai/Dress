@@ -31,7 +31,7 @@
         <Label fx:id="lblMoedas" 
                layoutX="1285.0" 
                layoutY="80.0" 
-               prefHeight="60.0" 
+               prefHeight="60.0"  
                prefWidth="180.0" 
                styleClass="moedas-label" 
                text="0" />
