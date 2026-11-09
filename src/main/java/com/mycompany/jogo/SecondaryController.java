@@ -6,6 +6,11 @@ import javafx.fxml.FXML;
 public class SecondaryController {
 
     @FXML
+    private void voltarTela() throws IOException {
+        App.setRoot("primary");
+    }
+
+    @FXML
     private void selecionarMariana() throws IOException {
         GameController.personagemAtual = "MARIANA";
         GameController.fundoAtual = "fundoMariana.png";
