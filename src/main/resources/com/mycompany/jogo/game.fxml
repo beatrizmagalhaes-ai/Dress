@@ -33,31 +33,31 @@
                styleClass="moedas-label" 
                text="0" />
 
-        <!-- 3. MARIANA NO PEDESTAL -->
+        <!-- 3. PERSONAGEM NO PEDESTAL (Vale para Mariana, Mayara, Beatriz e Marco) -->
         <ImageView fx:id="imgPersonagem" 
                    fitHeight="560.0" 
                    fitWidth="280.0" 
-                   layoutX="225.0" 
-                   layoutY="310.0" 
+                   layoutX="258.0" 
+                   layoutY="348.0" 
                    pickOnBounds="true" 
                    preserveRatio="true" />
 
-        <!-- 3.1 ROUPA SOBREPOSTA NO CORPO -->
+        <!-- 3.1 ROUPA SOBREPOSTA NO CORPO (Mesmas coordenadas do personagem) -->
         <ImageView fx:id="imgRoupaEquipada" 
                    fitHeight="560.0" 
                    fitWidth="280.0" 
-                   layoutX="225.0" 
-                   layoutY="310.0" 
+                   layoutX="258.0" 
+                   layoutY="348.0" 
                    pickOnBounds="true" 
                    preserveRatio="true" />
 
         <!-- 4. Abas do Guarda-Roupa -->
         <Button fx:id="btnVestidos" alignment="CENTER" layoutX="702.0" layoutY="265.0" onAction="#mostrarVestidos" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="VESTIDOS" />
-        <Button fx:id="btnBlusas" alignment="CENTER" layoutX="816.0" layoutY="265.0" onAction="#mostrarBlusas" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="BLUSAS" />
-        <Button fx:id="btnCalcas" alignment="CENTER" layoutX="930.0" layoutY="265.0" onAction="#mostrarCalcas" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="CALÇAS" />
-        <Button fx:id="btnAcessorios" alignment="CENTER" layoutX="1044.0" layoutY="265.0" onAction="#mostrarAcessorios" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="ACESSÓRIOS" />
-        <Button fx:id="btnSapatos" alignment="CENTER" layoutX="1158.0" layoutY="265.0" onAction="#mostrarSapatos" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="SAPATOS" />
-        <Button fx:id="btnSairLoja" alignment="CENTER" layoutX="1272.0" layoutY="265.0" onAction="#sairOuAbrirLoja" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="LOJA" />
+        <Button fx:id="btnBlusas" alignment="CENTER" layoutX="822.0" layoutY="265.0" onAction="#mostrarBlusas" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="BLUSAS" />
+        <Button fx:id="btnCalcas" alignment="CENTER" layoutX="942.0" layoutY="265.0" onAction="#mostrarCalcas" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="CALÇAS" />
+        <Button fx:id="btnAcessorios" alignment="CENTER" layoutX="1062.0" layoutY="265.0" onAction="#mostrarAcessorios" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="ACESSÓRIOS" />
+        <Button fx:id="btnSapatos" alignment="CENTER" layoutX="1182.0" layoutY="265.0" onAction="#mostrarSapatos" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="SAPATOS" />
+        <Button fx:id="btnSairLoja" alignment="CENTER" layoutX="1302.0" layoutY="265.0" onAction="#sairOuAbrirLoja" prefHeight="55.0" prefWidth="105.0" styleClass="aba-btn" text="LOJA" />
 
         <!-- 5. Guarda-Roupa: 6 Slots Posicionados no Centro de Cada Moldura -->
         <!-- LINHA DE CIMA (Y = 365) -->
@@ -67,13 +67,13 @@
             </graphic>
         </Button>
 
-        <Button alignment="CENTER" layoutX="936.0" layoutY="365.0" onAction="#equiparSlot2" prefHeight="195.0" prefWidth="215.0" styleClass="slot-btn">
+        <Button alignment="CENTER" layoutX="972.0" layoutY="365.0" onAction="#equiparSlot2" prefHeight="195.0" prefWidth="215.0" styleClass="slot-btn">
             <graphic>
                 <ImageView fx:id="imgSlot2" fitHeight="160.0" fitWidth="180.0" preserveRatio="true" />
             </graphic>
         </Button>
 
-        <Button alignment="CENTER" layoutX="1167.0" layoutY="365.0" onAction="#equiparSlot3" prefHeight="195.0" prefWidth="215.0" styleClass="slot-btn">
+        <Button alignment="CENTER" layoutX="1256.0" layoutY="365.0" onAction="#equiparSlot3" prefHeight="195.0" prefWidth="215.0" styleClass="slot-btn">
             <graphic>
                 <ImageView fx:id="imgSlot3" fitHeight="160.0" fitWidth="180.0" preserveRatio="true" />
             </graphic>
@@ -86,13 +86,13 @@
             </graphic>
         </Button>
 
-        <Button alignment="CENTER" layoutX="936.0" layoutY="620.0" onAction="#equiparSlot5" prefHeight="195.0" prefWidth="215.0" styleClass="slot-btn">
+        <Button alignment="CENTER" layoutX="972.0" layoutY="620.0" onAction="#equiparSlot5" prefHeight="195.0" prefWidth="215.0" styleClass="slot-btn">
             <graphic>
                 <ImageView fx:id="imgSlot5" fitHeight="160.0" fitWidth="180.0" preserveRatio="true" />
             </graphic>
         </Button>
 
-        <Button alignment="CENTER" layoutX="1167.0" layoutY="620.0" onAction="#equiparSlot6" prefHeight="195.0" prefWidth="215.0" styleClass="slot-btn">
+        <Button alignment="CENTER" layoutX="1256.0" layoutY="620.0" onAction="#equiparSlot6" prefHeight="195.0" prefWidth="215.0" styleClass="slot-btn">
             <graphic>
                 <ImageView fx:id="imgSlot6" fitHeight="160.0" fitWidth="180.0" preserveRatio="true" />
             </graphic>

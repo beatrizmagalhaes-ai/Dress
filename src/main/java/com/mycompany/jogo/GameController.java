@@ -38,6 +38,7 @@ public class GameController {
     private JogadorDAO jogadorDAO = new JogadorDAO();
     private Jogador jogadorLogado;
     private List<Roupa> roupasAtuais;
+    private Roupa roupaAtualEquipada = null;
 
     @FXML
     public void initialize() {
@@ -54,26 +55,50 @@ public class GameController {
             }
         }
 
-        // 2. Carrega a imagem do boneco base
-        if (imagemBonecoAtual != null && !imagemBonecoAtual.isEmpty()) {
-            try {
-                Image boneco = new Image(getClass().getResourceAsStream(imagemBonecoAtual));
-                imgPersonagem.setImage(boneco);
-                imgPersonagem.setPreserveRatio(true);
-            } catch (Exception e) {
-                System.err.println("Erro ao carregar boneco: " + imagemBonecoAtual);
-            }
+        // 2. Carrega a imagem inicial do boneco (com roupa de mendigo)
+        carregarBoneco(imagemBonecoAtual);
+
+        if (imgRoupaEquipada != null) {
+            imgRoupaEquipada.setPreserveRatio(true);
+            imgRoupaEquipada.toFront();
         }
 
-        // 3. Centraliza os slots e posiciona a boneca no pedestal
+        // 3. Garante que os ícones fiquem centralizados nos slots
         configurarSlots();
-        ajustarPosicoes();
 
         // 4. Atualiza dados do banco
         atualizarDadosJogador();
 
         // 5. Força o carregamento da categoria VESTIDOS ao iniciar
         mostrarVestidos();
+    }
+
+    private void carregarBoneco(String nomeArquivo) {
+        if (nomeArquivo != null && !nomeArquivo.isEmpty()) {
+            try {
+                InputStream is = getClass().getResourceAsStream(nomeArquivo);
+                if (is != null) {
+                    Image boneco = new Image(is);
+                    imgPersonagem.setImage(boneco);
+                    imgPersonagem.setPreserveRatio(true);
+                    imgPersonagem.setScaleX(1.0);
+                    imgPersonagem.setScaleY(1.0);
+                    imgPersonagem.setTranslateX(0.0);
+                    imgPersonagem.setTranslateY(0.0);
+                } else {
+                    System.err.println("Aviso: Imagem do boneco não encontrada: " + nomeArquivo);
+                }
+            } catch (Exception e) {
+                System.err.println("Erro ao carregar boneco: " + nomeArquivo);
+            }
+        }
+    }
+
+    private String getImagemBonecoLimpo() {
+        if (imagemBonecoAtual != null && imagemBonecoAtual.endsWith(".png")) {
+            return imagemBonecoAtual.replace(".png", "Limpa.png");
+        }
+        return imagemBonecoAtual;
     }
 
     private void configurarSlots() {
@@ -87,45 +112,6 @@ public class GameController {
                 slot.setPreserveRatio(true);
                 GridPane.setHalignment(slot, HPos.CENTER);
                 GridPane.setValignment(slot, VPos.CENTER);
-            }
-        }
-    }
-
-    private void ajustarPosicoes() {
-        // 1. Centraliza a boneca e desce para pisar no pedestal
-        if (imgPersonagem != null) {
-            imgPersonagem.setFitWidth(280);
-            imgPersonagem.setFitHeight(520);
-            imgPersonagem.setPreserveRatio(true);
-            imgPersonagem.setTranslateX(12);
-            imgPersonagem.setTranslateY(55);
-        }
-
-        // 2. Faz a roupa equipada acompanhar a posição exata da boneca
-        if (imgRoupaEquipada != null && imgPersonagem != null) {
-            imgRoupaEquipada.setFitWidth(imgPersonagem.getFitWidth());
-            imgRoupaEquipada.setFitHeight(imgPersonagem.getFitHeight());
-            imgRoupaEquipada.setPreserveRatio(true);
-            imgRoupaEquipada.setTranslateX(imgPersonagem.getTranslateX());
-            imgRoupaEquipada.setTranslateY(imgPersonagem.getTranslateY());
-            imgRoupaEquipada.toFront();
-        }
-
-        // 3. Alinha o GridPane (as 6 caixas) dentro das molduras douradas
-        if (gridItens != null) {
-            gridItens.setTranslateX(14);
-            gridItens.setTranslateY(4);
-            gridItens.setHgap(18);
-            gridItens.setVgap(18);
-        }
-
-        // 4. Ajusta o tamanho máximo dos ícones para caberem centralizados nos quadrados
-        ImageView[] slots = {imgSlot1, imgSlot2, imgSlot3, imgSlot4, imgSlot5, imgSlot6};
-        for (ImageView slot : slots) {
-            if (slot != null) {
-                slot.setFitWidth(135);
-                slot.setFitHeight(145);
-                slot.setPreserveRatio(true);
             }
         }
     }
@@ -178,11 +164,27 @@ public class GameController {
     private void vestirRoupa(int indice) {
         if (roupasAtuais != null && indice < roupasAtuais.size()) {
             Roupa roupaSelecionada = roupasAtuais.get(indice);
+
+            // Se clicar na mesma roupa que já está vestida, tira a roupa e volta a roupa inicial
+            if (roupaAtualEquipada != null && roupaAtualEquipada.getId().equals(roupaSelecionada.getId())) {
+                imgRoupaEquipada.setImage(null);
+                roupaAtualEquipada = null;
+                carregarBoneco(imagemBonecoAtual);
+                System.out.println("Roupa removida: " + roupaSelecionada.getNome());
+                return;
+            }
+
+            // Troca o corpo base para a versão limpa (sem roupa de mendigo)
+            carregarBoneco(getImagemBonecoLimpo());
+
+            // Veste a nova roupa selecionada por cima
             carregarImagem(imgRoupaEquipada, roupaSelecionada.getCaminhoVestida());
             if (imgRoupaEquipada != null) {
                 imgRoupaEquipada.setPreserveRatio(true);
                 imgRoupaEquipada.toFront();
             }
+            roupaAtualEquipada = roupaSelecionada;
+            System.out.println("Personagem vestido com: " + roupaSelecionada.getNome());
         }
     }
 
@@ -197,7 +199,7 @@ public class GameController {
 
     private void carregarImagem(ImageView container, String caminho) {
         if (container == null) {
-            System.err.println("ERRO: O ImageView (slot) está NULO! Verifique o fx:id no FXML.");
+            System.err.println("ERRO: O ImageView está NULO! Verifique o fx:id no FXML.");
             return;
         }
         if (caminho == null || caminho.isEmpty()) return;
