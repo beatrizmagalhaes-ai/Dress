@@ -3,14 +3,16 @@ package com.mycompany.jogo;
 import com.mycompany.jogo.dao.JogadorDAO;
 import com.mycompany.jogo.model.Jogador;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class GameController {
@@ -61,10 +63,13 @@ public class GameController {
             imgRoupaEquipada.toFront();
         }
 
-        // 3. Atualiza dados do banco
+        // 3. Garante que os ícones fiquem centralizados nos slots
+        configurarSlots();
+
+        // 4. Atualiza dados do banco
         atualizarDadosJogador();
 
-        // 4. Força o carregamento da categoria VESTIDOS ao iniciar
+        // 5. Força o carregamento da categoria VESTIDOS ao iniciar
         mostrarVestidos();
     }
 
@@ -94,6 +99,21 @@ public class GameController {
             return imagemBonecoAtual.replace(".png", "Limpa.png");
         }
         return imagemBonecoAtual;
+    }
+
+    private void configurarSlots() {
+        if (gridItens != null) {
+            gridItens.toFront();
+        }
+
+        ImageView[] slots = {imgSlot1, imgSlot2, imgSlot3, imgSlot4, imgSlot5, imgSlot6};
+        for (ImageView slot : slots) {
+            if (slot != null) {
+                slot.setPreserveRatio(true);
+                GridPane.setHalignment(slot, HPos.CENTER);
+                GridPane.setValignment(slot, VPos.CENTER);
+            }
+        }
     }
 
     private void atualizarDadosJogador() {
@@ -159,7 +179,10 @@ public class GameController {
 
             // Veste a nova roupa selecionada por cima
             carregarImagem(imgRoupaEquipada, roupaSelecionada.getCaminhoVestida());
-            imgRoupaEquipada.toFront();
+            if (imgRoupaEquipada != null) {
+                imgRoupaEquipada.setPreserveRatio(true);
+                imgRoupaEquipada.toFront();
+            }
             roupaAtualEquipada = roupaSelecionada;
             System.out.println("Personagem vestido com: " + roupaSelecionada.getNome());
         }
