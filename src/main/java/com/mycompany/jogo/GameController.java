@@ -76,24 +76,10 @@ public class GameController {
                     Image boneco = new Image(is);
                     imgPersonagem.setImage(boneco);
                     imgPersonagem.setPreserveRatio(true);
-
-                    // Ajusta o tamanho e a altura da imagem limpa para bater com a original
-                    if (nomeArquivo.contains("Limpa")) {
-                        double escala = 0.90;      // Diminui para 90% (altere para 0.88, 0.92, etc. se precisar)
-                        double descerY = 18.0;     // Desce 18 pixels para os pés continuarem no pedestal
-                        double moverX = 0.0;       // Ajuste horizontal se precisar
-
-                        imgPersonagem.setScaleX(escala);
-                        imgPersonagem.setScaleY(escala);
-                        imgPersonagem.setTranslateY(descerY);
-                        imgPersonagem.setTranslateX(moverX);
-                    } else {
-                        // Volta ao tamanho normal quando estiver com a roupa inicial
-                        imgPersonagem.setScaleX(1.0);
-                        imgPersonagem.setScaleY(1.0);
-                        imgPersonagem.setTranslateY(0.0);
-                        imgPersonagem.setTranslateX(0.0);
-                    }
+                    imgPersonagem.setScaleX(1.0);
+                    imgPersonagem.setScaleY(1.0);
+                    imgPersonagem.setTranslateX(0.0);
+                    imgPersonagem.setTranslateY(0.0);
                 } else {
                     System.err.println("Aviso: Imagem do boneco não encontrada: " + nomeArquivo);
                 }
