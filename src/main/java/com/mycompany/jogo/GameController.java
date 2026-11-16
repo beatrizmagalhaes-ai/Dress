@@ -36,6 +36,7 @@ public class GameController {
     private JogadorDAO jogadorDAO = new JogadorDAO();
     private Jogador jogadorLogado;
     private List<Roupa> roupasAtuais;
+    private Roupa roupaAtualEquipada = null;
 
     @FXML
     public void initialize() {
@@ -52,15 +53,12 @@ public class GameController {
             }
         }
 
-        // 2. Carrega a imagem do boneco base
-        if (imagemBonecoAtual != null && !imagemBonecoAtual.isEmpty()) {
-            try {
-                Image boneco = new Image(getClass().getResourceAsStream(imagemBonecoAtual));
-                imgPersonagem.setImage(boneco);
-                imgPersonagem.setPreserveRatio(true);
-            } catch (Exception e) {
-                System.err.println("Erro ao carregar boneco: " + imagemBonecoAtual);
-            }
+        // 2. Carrega a imagem inicial do boneco (com roupa de mendigo)
+        carregarBoneco(imagemBonecoAtual);
+
+        if (imgRoupaEquipada != null) {
+            imgRoupaEquipada.setPreserveRatio(true);
+            imgRoupaEquipada.toFront();
         }
 
         // 3. Atualiza dados do banco
@@ -68,6 +66,48 @@ public class GameController {
 
         // 4. Força o carregamento da categoria VESTIDOS ao iniciar
         mostrarVestidos();
+    }
+
+    private void carregarBoneco(String nomeArquivo) {
+        if (nomeArquivo != null && !nomeArquivo.isEmpty()) {
+            try {
+                InputStream is = getClass().getResourceAsStream(nomeArquivo);
+                if (is != null) {
+                    Image boneco = new Image(is);
+                    imgPersonagem.setImage(boneco);
+                    imgPersonagem.setPreserveRatio(true);
+
+                    // Ajusta o tamanho e a altura da imagem limpa para bater com a original
+                    if (nomeArquivo.contains("Limpa")) {
+                        double escala = 0.90;      // Diminui para 90% (altere para 0.88, 0.92, etc. se precisar)
+                        double descerY = 18.0;     // Desce 18 pixels para os pés continuarem no pedestal
+                        double moverX = 0.0;       // Ajuste horizontal se precisar
+
+                        imgPersonagem.setScaleX(escala);
+                        imgPersonagem.setScaleY(escala);
+                        imgPersonagem.setTranslateY(descerY);
+                        imgPersonagem.setTranslateX(moverX);
+                    } else {
+                        // Volta ao tamanho normal quando estiver com a roupa inicial
+                        imgPersonagem.setScaleX(1.0);
+                        imgPersonagem.setScaleY(1.0);
+                        imgPersonagem.setTranslateY(0.0);
+                        imgPersonagem.setTranslateX(0.0);
+                    }
+                } else {
+                    System.err.println("Aviso: Imagem do boneco não encontrada: " + nomeArquivo);
+                }
+            } catch (Exception e) {
+                System.err.println("Erro ao carregar boneco: " + nomeArquivo);
+            }
+        }
+    }
+
+    private String getImagemBonecoLimpo() {
+        if (imagemBonecoAtual != null && imagemBonecoAtual.endsWith(".png")) {
+            return imagemBonecoAtual.replace(".png", "Limpa.png");
+        }
+        return imagemBonecoAtual;
     }
 
     private void atualizarDadosJogador() {
@@ -118,7 +158,24 @@ public class GameController {
     private void vestirRoupa(int indice) {
         if (roupasAtuais != null && indice < roupasAtuais.size()) {
             Roupa roupaSelecionada = roupasAtuais.get(indice);
+
+            // Se clicar na mesma roupa que já está vestida, tira a roupa e volta a roupa inicial
+            if (roupaAtualEquipada != null && roupaAtualEquipada.getId().equals(roupaSelecionada.getId())) {
+                imgRoupaEquipada.setImage(null);
+                roupaAtualEquipada = null;
+                carregarBoneco(imagemBonecoAtual);
+                System.out.println("Roupa removida: " + roupaSelecionada.getNome());
+                return;
+            }
+
+            // Troca o corpo base para a versão limpa (sem roupa de mendigo)
+            carregarBoneco(getImagemBonecoLimpo());
+
+            // Veste a nova roupa selecionada por cima
             carregarImagem(imgRoupaEquipada, roupaSelecionada.getCaminhoVestida());
+            imgRoupaEquipada.toFront();
+            roupaAtualEquipada = roupaSelecionada;
+            System.out.println("Personagem vestido com: " + roupaSelecionada.getNome());
         }
     }
 
@@ -133,7 +190,7 @@ public class GameController {
 
     private void carregarImagem(ImageView container, String caminho) {
         if (container == null) {
-            System.err.println("ERRO: O ImageView (slot) está NULO! Verifique o fx:id no FXML.");
+            System.err.println("ERRO: O ImageView está NULO! Verifique o fx:id no FXML.");
             return;
         }
         if (caminho == null || caminho.isEmpty()) return;
