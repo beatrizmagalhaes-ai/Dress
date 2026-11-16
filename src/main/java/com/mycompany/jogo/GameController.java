@@ -3,14 +3,16 @@ package com.mycompany.jogo;
 import com.mycompany.jogo.dao.JogadorDAO;
 import com.mycompany.jogo.model.Jogador;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class GameController {
@@ -63,11 +65,69 @@ public class GameController {
             }
         }
 
-        // 3. Atualiza dados do banco
+        // 3. Centraliza os slots e posiciona a boneca no pedestal
+        configurarSlots();
+        ajustarPosicoes();
+
+        // 4. Atualiza dados do banco
         atualizarDadosJogador();
 
-        // 4. Força o carregamento da categoria VESTIDOS ao iniciar
+        // 5. Força o carregamento da categoria VESTIDOS ao iniciar
         mostrarVestidos();
+    }
+
+    private void configurarSlots() {
+        if (gridItens != null) {
+            gridItens.toFront();
+        }
+
+        ImageView[] slots = {imgSlot1, imgSlot2, imgSlot3, imgSlot4, imgSlot5, imgSlot6};
+        for (ImageView slot : slots) {
+            if (slot != null) {
+                slot.setPreserveRatio(true);
+                GridPane.setHalignment(slot, HPos.CENTER);
+                GridPane.setValignment(slot, VPos.CENTER);
+            }
+        }
+    }
+
+    private void ajustarPosicoes() {
+        // 1. Centraliza a boneca e desce para pisar no pedestal
+        if (imgPersonagem != null) {
+            imgPersonagem.setFitWidth(280);
+            imgPersonagem.setFitHeight(520);
+            imgPersonagem.setPreserveRatio(true);
+            imgPersonagem.setTranslateX(12);
+            imgPersonagem.setTranslateY(55);
+        }
+
+        // 2. Faz a roupa equipada acompanhar a posição exata da boneca
+        if (imgRoupaEquipada != null && imgPersonagem != null) {
+            imgRoupaEquipada.setFitWidth(imgPersonagem.getFitWidth());
+            imgRoupaEquipada.setFitHeight(imgPersonagem.getFitHeight());
+            imgRoupaEquipada.setPreserveRatio(true);
+            imgRoupaEquipada.setTranslateX(imgPersonagem.getTranslateX());
+            imgRoupaEquipada.setTranslateY(imgPersonagem.getTranslateY());
+            imgRoupaEquipada.toFront();
+        }
+
+        // 3. Alinha o GridPane (as 6 caixas) dentro das molduras douradas
+        if (gridItens != null) {
+            gridItens.setTranslateX(14);
+            gridItens.setTranslateY(4);
+            gridItens.setHgap(18);
+            gridItens.setVgap(18);
+        }
+
+        // 4. Ajusta o tamanho máximo dos ícones para caberem centralizados nos quadrados
+        ImageView[] slots = {imgSlot1, imgSlot2, imgSlot3, imgSlot4, imgSlot5, imgSlot6};
+        for (ImageView slot : slots) {
+            if (slot != null) {
+                slot.setFitWidth(135);
+                slot.setFitHeight(145);
+                slot.setPreserveRatio(true);
+            }
+        }
     }
 
     private void atualizarDadosJogador() {
@@ -119,6 +179,10 @@ public class GameController {
         if (roupasAtuais != null && indice < roupasAtuais.size()) {
             Roupa roupaSelecionada = roupasAtuais.get(indice);
             carregarImagem(imgRoupaEquipada, roupaSelecionada.getCaminhoVestida());
+            if (imgRoupaEquipada != null) {
+                imgRoupaEquipada.setPreserveRatio(true);
+                imgRoupaEquipada.toFront();
+            }
         }
     }
 

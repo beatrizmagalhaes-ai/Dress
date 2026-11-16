@@ -8,7 +8,7 @@ public class BancoDeRoupas {
     private static List<Roupa> todasAsRoupas = new ArrayList<>();
 
     static {
-        // Vestido 1
+        // ================= VESTIDOS =================
         todasAsRoupas.add(new Roupa(
             "v1", 
             "Vestido 1", 
@@ -17,7 +17,6 @@ public class BancoDeRoupas {
             "/com/mycompany/jogo/vestidas/vestido1.png"
         ));
 
-        // Vestido 2
         todasAsRoupas.add(new Roupa(
             "v2", 
             "Vestido 2", 
@@ -26,7 +25,6 @@ public class BancoDeRoupas {
             "/com/mycompany/jogo/vestidas/vestido2.png"
         ));
 
-        // Vestido 3
         todasAsRoupas.add(new Roupa(
             "v3", 
             "Vestido 3", 
@@ -35,7 +33,6 @@ public class BancoDeRoupas {
             "/com/mycompany/jogo/vestidas/vestido3.png"
         ));
 
-        // Vestido 4
         todasAsRoupas.add(new Roupa(
             "v4", 
             "Vestido 4", 
@@ -44,7 +41,6 @@ public class BancoDeRoupas {
             "/com/mycompany/jogo/vestidas/vestido4.png"
         ));
 
-        // Vestido 5
         todasAsRoupas.add(new Roupa(
             "v5", 
             "Vestido 5", 
@@ -53,13 +49,61 @@ public class BancoDeRoupas {
             "/com/mycompany/jogo/vestidas/vestido5.png"
         ));
 
-        // Vestido 6
         todasAsRoupas.add(new Roupa(
             "v6", 
             "Vestido 6", 
             "VESTIDO", 
             "/com/mycompany/jogo/icones/vestido6.png", 
             "/com/mycompany/jogo/vestidas/vestido6.png"
+        ));
+
+        // ================= BLUSAS =================
+        todasAsRoupas.add(new Roupa(
+            "b1", 
+            "Blusa 1", 
+            "BLUSA", 
+            "/com/mycompany/jogo/icones/blusa1.png", 
+            "/com/mycompany/jogo/vestidas/blusa1.png"
+        ));
+
+        todasAsRoupas.add(new Roupa(
+            "b2", 
+            "Blusa 2", 
+            "BLUSA", 
+            "/com/mycompany/jogo/icones/blusa2.png", 
+            "/com/mycompany/jogo/vestidas/blusa2.png"
+        ));
+
+        todasAsRoupas.add(new Roupa(
+            "b3", 
+            "Blusa 3", 
+            "BLUSA", 
+            "/com/mycompany/jogo/icones/blusa3.png", 
+            "/com/mycompany/jogo/vestidas/blusa3.png"
+        ));
+
+        todasAsRoupas.add(new Roupa(
+            "b4", 
+            "Blusa 4", 
+            "BLUSA", 
+            "/com/mycompany/jogo/icones/blusa4.png", 
+            "/com/mycompany/jogo/vestidas/blusa4.png"
+        ));
+
+        todasAsRoupas.add(new Roupa(
+            "b5", 
+            "Blusa 5", 
+            "BLUSA", 
+            "/com/mycompany/jogo/icones/blusa5.png", 
+            "/com/mycompany/jogo/vestidas/blusa5.png"
+        ));
+
+        todasAsRoupas.add(new Roupa(
+            "b6", 
+            "Blusa 6", 
+            "BLUSA", 
+            "/com/mycompany/jogo/icones/blusa6.png", 
+            "/com/mycompany/jogo/vestidas/blusa6.png"
         ));
     }
 
