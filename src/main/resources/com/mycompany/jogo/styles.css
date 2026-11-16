@@ -125,3 +125,17 @@
 .guarda-roupa-grid {
     -fx-background-color: transparent !important;
 }
+
+/* Remove o fundo cinza/branco dos 6 slots (caixinhas) do Guarda-Roupa */
+.slot-btn {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-background-insets: 0 !important;
+    -fx-padding: 0 !important;
+    -fx-cursor: hand;
+}
+
+.slot-btn:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
