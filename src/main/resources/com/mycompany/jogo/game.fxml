@@ -42,12 +42,43 @@
                    pickOnBounds="true" 
                    preserveRatio="true" />
 
-        <!-- 3.1 ROUPA SOBREPOSTA NO CORPO (Mesmas coordenadas do personagem) -->
+        <!-- 3.1 SAPATO SOBREPOSTO NO CORPO -->
+        <ImageView fx:id="imgSapatoEquipado" 
+                   fitHeight="560.0" 
+                   fitWidth="280.0" 
+                   layoutX="258.0" 
+                   layoutY="348.0" 
+                   mouseTransparent="true"
+                   pickOnBounds="true" 
+                   preserveRatio="true" />
+
+        <!-- 3.2 CALÇA SOBREPOSTA NO CORPO -->
+        <ImageView fx:id="imgCalcaEquipada" 
+                   fitHeight="560.0" 
+                   fitWidth="280.0" 
+                   layoutX="258.0" 
+                   layoutY="348.0" 
+                   mouseTransparent="true"
+                   pickOnBounds="true" 
+                   preserveRatio="true" />
+
+        <!-- 3.3 BLUSA OU VESTIDO SOBREPOSTO NO CORPO -->
         <ImageView fx:id="imgRoupaEquipada" 
                    fitHeight="560.0" 
                    fitWidth="280.0" 
                    layoutX="258.0" 
                    layoutY="348.0" 
+                   mouseTransparent="true"
+                   pickOnBounds="true" 
+                   preserveRatio="true" />
+
+        <!-- 3.4 ACESSÓRIO SOBREPOSTO NO CORPO -->
+        <ImageView fx:id="imgAcessorioEquipado" 
+                   fitHeight="560.0" 
+                   fitWidth="280.0" 
+                   layoutX="258.0" 
+                   layoutY="348.0" 
+                   mouseTransparent="true"
                    pickOnBounds="true" 
                    preserveRatio="true" />
 
