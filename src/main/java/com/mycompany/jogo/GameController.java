@@ -23,8 +23,14 @@ public class GameController {
 
     @FXML private AnchorPane gamePane;
     @FXML private Label lblMoedas;
+
+    // Camadas do personagem (da mais baixa para a mais alta)
     @FXML private ImageView imgPersonagem;
-    @FXML private ImageView imgRoupaEquipada;
+    @FXML private ImageView imgSapatoEquipado;
+    @FXML private ImageView imgCalcaEquipada;
+    @FXML private ImageView imgRoupaEquipada;      // Blusas e Vestidos
+    @FXML private ImageView imgAcessorioEquipado;
+
     @FXML private GridPane gridItens;
 
     // Ícones dos 6 slots do guarda-roupa
@@ -38,7 +44,12 @@ public class GameController {
     private JogadorDAO jogadorDAO = new JogadorDAO();
     private Jogador jogadorLogado;
     private List<Roupa> roupasAtuais;
-    private Roupa roupaAtualEquipada = null;
+
+    // Controle do que está vestido em cada camada
+    private Roupa sapatoAtual = null;
+    private Roupa calcaAtual = null;
+    private Roupa roupaCimaAtual = null; // Blusa ou Vestido
+    private Roupa acessorioAtual = null;
 
     @FXML
     public void initialize() {
@@ -55,22 +66,50 @@ public class GameController {
             }
         }
 
-        // 2. Carrega a imagem inicial do boneco (com roupa de mendigo)
+        // 2. Carrega a imagem inicial do boneco (com roupa inicial)
         carregarBoneco(imagemBonecoAtual);
 
-        if (imgRoupaEquipada != null) {
-            imgRoupaEquipada.setPreserveRatio(true);
-            imgRoupaEquipada.toFront();
-        }
-
-        // 3. Garante que os ícones fiquem centralizados nos slots
+        // 3. Garante a ordem das camadas e proporção
+        configurarCamadas();
         configurarSlots();
 
         // 4. Atualiza dados do banco
         atualizarDadosJogador();
 
-        // 5. Força o carregamento da categoria VESTIDOS ao iniciar
+        // 5. Inicia na aba de Vestidos
         mostrarVestidos();
+    }
+
+    private void configurarCamadas() {
+        ImageView[] camadas = {
+            imgPersonagem,
+            imgSapatoEquipado,
+            imgCalcaEquipada,
+            imgRoupaEquipada,
+            imgAcessorioEquipado
+        };
+
+        for (ImageView camada : camadas) {
+            if (camada != null) {
+                camada.setPreserveRatio(true);
+                camada.toFront();
+            }
+        }
+    }
+
+    private void configurarSlots() {
+        if (gridItens != null) {
+            gridItens.toFront();
+        }
+
+        ImageView[] slots = {imgSlot1, imgSlot2, imgSlot3, imgSlot4, imgSlot5, imgSlot6};
+        for (ImageView slot : slots) {
+            if (slot != null) {
+                slot.setPreserveRatio(true);
+                GridPane.setHalignment(slot, HPos.CENTER);
+                GridPane.setValignment(slot, VPos.CENTER);
+            }
+        }
     }
 
     private void carregarBoneco(String nomeArquivo) {
@@ -101,19 +140,26 @@ public class GameController {
         return imagemBonecoAtual;
     }
 
-    private void configurarSlots() {
-        if (gridItens != null) {
-            gridItens.toFront();
-        }
+    private void atualizarEstadoCorpoBase() {
+        boolean temAlgumaRoupa = (sapatoAtual != null) ||
+                                 (calcaAtual != null) ||
+                                 (roupaCimaAtual != null) ||
+                                 (acessorioAtual != null);
 
-        ImageView[] slots = {imgSlot1, imgSlot2, imgSlot3, imgSlot4, imgSlot5, imgSlot6};
-        for (ImageView slot : slots) {
-            if (slot != null) {
-                slot.setPreserveRatio(true);
-                GridPane.setHalignment(slot, HPos.CENTER);
-                GridPane.setValignment(slot, VPos.CENTER);
-            }
+        if (temAlgumaRoupa) {
+            carregarBoneco(getImagemBonecoLimpo());
+        } else {
+            carregarBoneco(imagemBonecoAtual);
         }
+    }
+
+    private String resolverCaminhoVestida(Roupa roupa) {
+        String caminho = roupa.getCaminhoVestida();
+        // Se for o Marco, redireciona "vestidas/..." para "vestidas/marco/..."
+        if ("MARCO".equalsIgnoreCase(personagemAtual) && caminho.startsWith("vestidas/")) {
+            return caminho.replaceFirst("vestidas/", "vestidas/marco/");
+        }
+        return caminho;
     }
 
     private void atualizarDadosJogador() {
@@ -127,11 +173,7 @@ public class GameController {
 
     // --- FILTROS DE CATEGORIA ---
 
-    @FXML
-    private void mostrarVestidos() {
-        carregarCategoria("VESTIDO");
-    }
-
+    @FXML private void mostrarVestidos() { carregarCategoria("VESTIDO"); }
     @FXML private void mostrarBlusas() { carregarCategoria("BLUSA"); }
     @FXML private void mostrarCalcas() { carregarCategoria("CALCA"); }
     @FXML private void mostrarAcessorios() { carregarCategoria("ACESSORIO"); }
@@ -140,14 +182,10 @@ public class GameController {
 
     private void carregarCategoria(String categoria) {
         roupasAtuais = BancoDeRoupas.getRoupasPorCategoria(categoria);
-        System.out.println("Categoria carregada: " + categoria + " | Quantidade de roupas encontradas: " + roupasAtuais.size());
-        
         limparSlots();
 
         ImageView[] slots = {imgSlot1, imgSlot2, imgSlot3, imgSlot4, imgSlot5, imgSlot6};
-        
         for (int i = 0; i < roupasAtuais.size() && i < 6; i++) {
-            System.out.println("A carregar roupa " + i + " no slot: " + roupasAtuais.get(i).getCaminhoIcone());
             carregarImagem(slots[i], roupasAtuais.get(i).getCaminhoIcone());
         }
     }
@@ -162,60 +200,95 @@ public class GameController {
     @FXML private void equiparSlot6() { vestirRoupa(5); }
 
     private void vestirRoupa(int indice) {
-        if (roupasAtuais != null && indice < roupasAtuais.size()) {
-            Roupa roupaSelecionada = roupasAtuais.get(indice);
+        if (roupasAtuais == null || indice >= roupasAtuais.size()) return;
 
-            // Se clicar na mesma roupa que já está vestida, tira a roupa e volta a roupa inicial
-            if (roupaAtualEquipada != null && roupaAtualEquipada.getId().equals(roupaSelecionada.getId())) {
-                imgRoupaEquipada.setImage(null);
-                roupaAtualEquipada = null;
-                carregarBoneco(imagemBonecoAtual);
-                System.out.println("Roupa removida: " + roupaSelecionada.getNome());
-                return;
-            }
+        Roupa selecionada = roupasAtuais.get(indice);
+        String categoria = selecionada.getCategoria().toUpperCase();
 
-            // Troca o corpo base para a versão limpa (sem roupa de mendigo)
-            carregarBoneco(getImagemBonecoLimpo());
+        switch (categoria) {
+            case "SAPATO":
+                if (sapatoAtual != null && sapatoAtual.getId().equals(selecionada.getId())) {
+                    sapatoAtual = null;
+                    if (imgSapatoEquipado != null) imgSapatoEquipado.setImage(null);
+                } else {
+                    sapatoAtual = selecionada;
+                    carregarImagem(imgSapatoEquipado, resolverCaminhoVestida(selecionada));
+                }
+                break;
 
-            // Veste a nova roupa selecionada por cima
-            carregarImagem(imgRoupaEquipada, roupaSelecionada.getCaminhoVestida());
-            if (imgRoupaEquipada != null) {
-                imgRoupaEquipada.setPreserveRatio(true);
-                imgRoupaEquipada.toFront();
-            }
-            roupaAtualEquipada = roupaSelecionada;
-            System.out.println("Personagem vestido com: " + roupaSelecionada.getNome());
+            case "CALCA":
+                if (calcaAtual != null && calcaAtual.getId().equals(selecionada.getId())) {
+                    calcaAtual = null;
+                    if (imgCalcaEquipada != null) imgCalcaEquipada.setImage(null);
+                } else {
+                    // Se estava com vestido inteiro, tira o vestido para colocar a calça
+                    if (roupaCimaAtual != null && "VESTIDO".equalsIgnoreCase(roupaCimaAtual.getCategoria())) {
+                        roupaCimaAtual = null;
+                        if (imgRoupaEquipada != null) imgRoupaEquipada.setImage(null);
+                    }
+                    calcaAtual = selecionada;
+                    carregarImagem(imgCalcaEquipada, resolverCaminhoVestida(selecionada));
+                }
+                break;
+
+            case "BLUSA":
+                if (roupaCimaAtual != null && roupaCimaAtual.getId().equals(selecionada.getId())) {
+                    roupaCimaAtual = null;
+                    if (imgRoupaEquipada != null) imgRoupaEquipada.setImage(null);
+                } else {
+                    roupaCimaAtual = selecionada;
+                    carregarImagem(imgRoupaEquipada, resolverCaminhoVestida(selecionada));
+                }
+                break;
+
+            case "VESTIDO":
+                if (roupaCimaAtual != null && roupaCimaAtual.getId().equals(selecionada.getId())) {
+                    roupaCimaAtual = null;
+                    if (imgRoupaEquipada != null) imgRoupaEquipada.setImage(null);
+                } else {
+                    // Vestido substitui blusa e tira calça
+                    calcaAtual = null;
+                    if (imgCalcaEquipada != null) imgCalcaEquipada.setImage(null);
+
+                    roupaCimaAtual = selecionada;
+                    carregarImagem(imgRoupaEquipada, resolverCaminhoVestida(selecionada));
+                }
+                break;
+
+            case "ACESSORIO":
+                if (acessorioAtual != null && acessorioAtual.getId().equals(selecionada.getId())) {
+                    acessorioAtual = null;
+                    if (imgAcessorioEquipado != null) imgAcessorioEquipado.setImage(null);
+                } else {
+                    acessorioAtual = selecionada;
+                    carregarImagem(imgAcessorioEquipado, resolverCaminhoVestida(selecionada));
+                }
+                break;
         }
+
+        atualizarEstadoCorpoBase();
+        configurarCamadas();
     }
 
     private void limparSlots() {
         ImageView[] slots = {imgSlot1, imgSlot2, imgSlot3, imgSlot4, imgSlot5, imgSlot6};
         for (ImageView slot : slots) {
-            if (slot != null) {
-                slot.setImage(null);
-            }
+            if (slot != null) slot.setImage(null);
         }
     }
 
     private void carregarImagem(ImageView container, String caminho) {
-        if (container == null) {
-            System.err.println("ERRO: O ImageView está NULO! Verifique o fx:id no FXML.");
-            return;
-        }
-        if (caminho == null || caminho.isEmpty()) return;
+        if (container == null || caminho == null || caminho.isEmpty()) return;
 
         try {
             InputStream is = getClass().getResourceAsStream(caminho);
             if (is == null) {
-                System.err.println("ERRO: Ficheiro de imagem não encontrado no caminho: " + caminho);
+                System.err.println("Aviso: Imagem ainda não adicionada: " + caminho);
             } else {
-                Image img = new Image(is);
-                container.setImage(img);
-                System.out.println("Imagem carregada com sucesso em: " + caminho);
+                container.setImage(new Image(is));
             }
         } catch (Exception e) {
-            System.err.println("Exceção ao carregar imagem: " + caminho);
-            e.printStackTrace();
+            System.err.println("Erro ao carregar imagem: " + caminho);
         }
     }
 
@@ -226,7 +299,6 @@ public class GameController {
         if (jogadorLogado != null) {
             int novasMoedas = jogadorLogado.getMoedas() + 100;
             boolean atualizou = jogadorDAO.atualizarMoedas(jogadorLogado.getId(), novasMoedas);
-            
             if (atualizou) {
                 jogadorLogado.setMoedas(novasMoedas);
                 lblMoedas.setText(String.valueOf(novasMoedas));
