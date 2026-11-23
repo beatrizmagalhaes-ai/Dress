@@ -292,23 +292,33 @@ public class GameController {
         }
     }
 
-    // --- SALVAR E VOLTAR ---
-
-    @FXML
-    private void salvarLook() {
-        if (jogadorLogado != null) {
-            int novasMoedas = jogadorLogado.getMoedas() + 100;
-            boolean atualizou = jogadorDAO.atualizarMoedas(jogadorLogado.getId(), novasMoedas);
-            if (atualizou) {
-                jogadorLogado.setMoedas(novasMoedas);
-                lblMoedas.setText(String.valueOf(novasMoedas));
-                System.out.println("Look salvo com sucesso!");
-            }
-        }
-    }
-
     @FXML
     private void voltarParaSelecao() throws IOException {
         App.setRoot("secondary");
+    }
+
+    @FXML
+    private void salvarLook() throws IOException {
+        boolean temAlgumaRoupa = (sapatoAtual != null) ||
+                                 (calcaAtual != null) ||
+                                 (roupaCimaAtual != null) ||
+                                 (acessorioAtual != null);
+
+        // 1. Passa o estado atual do personagem para o DesfileController
+        DesfileController.bonecoDesfile = temAlgumaRoupa ? getImagemBonecoLimpo() : imagemBonecoAtual;
+
+        if (roupaCimaAtual != null) {
+            DesfileController.roupaDesfile = resolverCaminhoVestida(roupaCimaAtual);
+            DesfileController.categoriaRoupaDesfile = roupaCimaAtual.getCategoria();
+        } else if (calcaAtual != null) {
+            DesfileController.roupaDesfile = resolverCaminhoVestida(calcaAtual);
+            DesfileController.categoriaRoupaDesfile = calcaAtual.getCategoria();
+        } else {
+            DesfileController.roupaDesfile = null;
+            DesfileController.categoriaRoupaDesfile = null;
+        }
+
+        // 2. Abre a tela do desfile (batalha)
+        App.setRoot("desfile");
     }
 }
