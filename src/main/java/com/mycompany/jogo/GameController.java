@@ -305,20 +305,18 @@ public class GameController {
                                  (acessorioAtual != null);
 
         // 1. Passa o estado atual do personagem para o DesfileController
-        DesfileController.bonecoDesfile = temAlgumaRoupa ? getImagemBonecoLimpo() : imagemBonecoAtual;
+        DesfileController.bonecoJogador = temAlgumaRoupa ? getImagemBonecoLimpo() : imagemBonecoAtual;
 
+        // Passa a peça principal equipada (prioriza vestido/blusa, senão calça)
         if (roupaCimaAtual != null) {
-            DesfileController.roupaDesfile = resolverCaminhoVestida(roupaCimaAtual);
-            DesfileController.categoriaRoupaDesfile = roupaCimaAtual.getCategoria();
+            DesfileController.roupaJogador = roupaCimaAtual;
         } else if (calcaAtual != null) {
-            DesfileController.roupaDesfile = resolverCaminhoVestida(calcaAtual);
-            DesfileController.categoriaRoupaDesfile = calcaAtual.getCategoria();
+            DesfileController.roupaJogador = calcaAtual;
         } else {
-            DesfileController.roupaDesfile = null;
-            DesfileController.categoriaRoupaDesfile = null;
+            DesfileController.roupaJogador = null;
         }
 
-        // 2. Abre a tela do desfile (batalha)
+        // 2. Abre a tela do desfile
         App.setRoot("desfile");
     }
 }

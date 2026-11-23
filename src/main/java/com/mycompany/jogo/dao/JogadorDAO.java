@@ -95,17 +95,17 @@ public class JogadorDAO {
     
     public boolean atualizarRecompensaDesfile(int jogadorId, int novasMoedas, int novosPontosEstilo) {
         String sql = "UPDATE jogador SET moedas = ?, pontos_estilo = ? WHERE id = ?";
-        
+       
         try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, novasMoedas);
             stmt.setInt(2, novosPontosEstilo);
             stmt.setInt(3, jogadorId);
             return stmt.executeUpdate() > 0;
-        }
-        catch (SQLException e) {
-        System.err.println("Erro ao atualizar recompensa do desfile: " + e.getMessage());
-        return false;
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar recompensa do desfile: " + e.getMessage());
+            return false;
         }
     }
 }

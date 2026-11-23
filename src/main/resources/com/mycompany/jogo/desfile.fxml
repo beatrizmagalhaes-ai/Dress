@@ -10,22 +10,50 @@
 
 <AnchorPane fx:id="desfilePane" prefHeight="1080.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.jogo.DesfileController">
    <children>
-      <!-- Container que move o personagem e a roupa juntos na passarela -->
-      <StackPane fx:id="containerAvatar" layoutX="600.0" layoutY="200.0" prefHeight="650.0" prefWidth="400.0">
+      <!-- Botão invisível em cima da seta rosa da imagem de fundo -->
+      <Button layoutX="15.0" layoutY="15.0" onAction="#voltarParaVestiario" prefHeight="135.0" prefWidth="135.0" style="-fx-background-color: transparent; -fx-cursor: hand;" />
+
+      <!-- PERSONAGEM 1 (Jogador) -->
+      <VBox alignment="CENTER" layoutX="310.0" layoutY="210.0" spacing="8.0">
          <children>
-            <ImageView fx:id="imgPersonagemDesfile" fitHeight="650.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgRoupaDesfile" fitHeight="650.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblNomeJogador" style="-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 12; -fx-padding: 4 16 4 16;" text="JOGADOR" textFill="#9b287b">
+               <font><Font name="System Bold" size="18.0" /></font>
+            </Label>
+            <StackPane fx:id="containerAvatar1" prefHeight="600.0" prefWidth="350.0">
+               <children>
+                  <ImageView fx:id="imgPersonagemDesfile1" fitHeight="600.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgRoupaDesfile1" fitHeight="600.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
          </children>
-      </StackPane>
+      </VBox>
+
+      <!-- PERSONAGEM 2 (Rival) -->
+      <VBox alignment="CENTER" layoutX="700.0" layoutY="210.0" spacing="8.0">
+         <children>
+            <Label fx:id="lblNomeRival" style="-fx-background-color: rgba(255,255,255,0.85); -fx-background-radius: 12; -fx-padding: 4 16 4 16;" text="RIVAL" textFill="#2b5b84">
+               <font><Font name="System Bold" size="18.0" /></font>
+            </Label>
+            <StackPane fx:id="containerAvatar2" prefHeight="600.0" prefWidth="350.0">
+               <children>
+                  <ImageView fx:id="imgPersonagemDesfile2" fitHeight="600.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgRoupaDesfile2" fitHeight="600.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
 
       <!-- Painel de Resultado -->
-      <VBox alignment="CENTER" layoutX="1080.0" layoutY="300.0" prefHeight="350.0" prefWidth="420.0" spacing="15.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 20; -fx-padding: 25;">
+      <VBox alignment="CENTER" layoutX="1120.0" layoutY="280.0" prefHeight="430.0" prefWidth="410.0" spacing="14.0" style="-fx-background-color: rgba(255, 255, 255, 0.93); -fx-background-radius: 20; -fx-border-color: #d4af37; -fx-border-width: 3; -fx-border-radius: 20; -fx-padding: 25;">
          <children>
-            <Label text="RESULTADO DO DESFILE">
-               <font><Font name="System Bold" size="24.0" /></font>
+            <Label text="RESULTADO DO DESFILE" textFill="#8a5a00">
+               <font><Font name="System Bold" size="22.0" /></font>
             </Label>
-            <Label fx:id="lblMensagemJurados" text="Avaliando look..." textAlignment="CENTER" wrapText="true">
-               <font><Font size="16.0" /></font>
+            <Label fx:id="lblPlacarDuelo" text="Calculando notas..." textAlignment="CENTER" textFill="#333333" wrapText="true">
+               <font><Font name="System Bold" size="17.0" /></font>
+            </Label>
+            <Label fx:id="lblMensagemJurados" text="Aguarde o fim do desfile..." textAlignment="CENTER" wrapText="true">
+               <font><Font size="15.0" /></font>
             </Label>
             <Label fx:id="lblPontuacao" text="Pontos de Estilo: ..." textFill="#9b287b">
                <font><Font name="System Bold" size="20.0" /></font>
@@ -33,8 +61,8 @@
             <Label fx:id="lblMoedasGanhas" text="Moedas Ganhas: ..." textFill="#d49b00">
                <font><Font name="System Bold" size="20.0" /></font>
             </Label>
-            <Button onAction="#voltarParaVestiario" prefHeight="45.0" prefWidth="250.0" text="Voltar ao Vestiário" />
-            <Button onAction="#irParaRanking" prefHeight="45.0" prefWidth="250.0" text="Ver Ranking" />
+            <Button onAction="#voltarParaVestiario" prefHeight="42.0" prefWidth="250.0" text="Voltar ao Vestiário" />
+            <Button onAction="#irParaRanking" prefHeight="42.0" prefWidth="250.0" text="Ver Ranking" />
          </children>
       </VBox>
    </children>
