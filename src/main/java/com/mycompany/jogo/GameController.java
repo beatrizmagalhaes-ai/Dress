@@ -155,10 +155,19 @@ public class GameController {
 
     private String resolverCaminhoVestida(Roupa roupa) {
         String caminho = roupa.getCaminhoVestida();
-        // Se for o Marco, redireciona "vestidas/..." para "vestidas/marco/..."
-        if ("MARCO".equalsIgnoreCase(personagemAtual) && caminho.startsWith("vestidas/")) {
-            return caminho.replaceFirst("vestidas/", "vestidas/marco/");
+
+        // Se for o Marco, redireciona ".../vestidas/..." para ".../vestidas/marco/..."
+        if ("MARCO".equalsIgnoreCase(personagemAtual) && caminho.contains("/vestidas/")) {
+            return caminho.replaceFirst("/vestidas/", "/vestidas/marco/");
         }
+
+        // Se for a Beatriz E a peça for uma CALÇA, redireciona ".../vestidas/..." para ".../vestidas/beatriz/..."
+        if ("BEATRIZ".equalsIgnoreCase(personagemAtual)
+                && "CALCA".equalsIgnoreCase(roupa.getCategoria())
+                && caminho.contains("/vestidas/")) {
+            return caminho.replaceFirst("/vestidas/", "/vestidas/beatriz/");
+        }
+
         return caminho;
     }
 
